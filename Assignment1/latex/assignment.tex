@@ -73,7 +73,143 @@ Even though Rayleigh quotient iteration is more computationally expensive as it 
 
 \end{enumerate}
 
+\newpage
 \subsection{Other webgraphs [10 points]}
+In this part of the assignment, the pageranks of three different subsets of the Web (Chess.com, RSI, and StackOverflow) has been computed.
+In each section we show the connectivity graph of the webgraph, the pagerank graph and the top 10 pages with the highest pagerank.
+
+The experiments are all done by calling the same function \texttt{surfer} that access the desired homepage and then generates a 500-by-500 test case.
+
+
+\subsubsection{Webgraph 1: Chess.com}
+\begin{figure}[h!]
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[height=5cm]{fig/chess.jpg}
+        \caption{Spy plot of the Chess.com webgraph.}
+        \label{fig:chesscom}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[height=5cm]{fig/chess_pagerank.jpg}
+        \caption{PageRank of Chess.com webgraph.}
+        \label{fig:chesscom_pagerank}
+    \end{minipage}
+\end{figure}
+
+\begin{table}[h!]
+    \small
+    \centering
+    \begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        \textbf{Index} & \textbf{Page-rank} & \textbf{In} & \textbf{Out} & \textbf{Url}\\
+        \hline
+        146 &    0.05148 &  96 &   1 & \tiny{\url{https://support.chess.com}} \\
+         62 &  0.0362528 &  58 &   1 & \tiny{\url{https://www.instagram.com/wwwchesscom/}} \\
+         59 &  0.0196081 &  80 &   1 & \tiny{\url{https://twitter.com/chesscom}} \\
+         61 &  0.0196081 &  80 &   1 & \tiny{\url{https://www.twitch.tv/chess}} \\
+        264 & 0.00928716 &  19 &   1 & \tiny{\url{https://twitter.com/chesscom_es}} \\
+        356 & 0.00927139 &  19 &   1 & \tiny{\url{https://twitter.com/chesscom_fr}} \\
+        447 & 0.00915483 &  19 &   1 & \tiny{\url{https://twitter.com/chesscom_de}} \\
+          3 &  0.0061748 &  84 & 174 & \tiny{\url{https://www.chess.com/es}} \\
+          4 & 0.00616691 &  84 & 173 & \tiny{\url{https://www.chess.com/fr}} \\
+        128 & 0.00551868 & 103 &   2 & \tiny{\url{https://support.chess.com/collection/136-community-safety}} \\
+        \hline
+    \end{tabular}
+    \caption{The ten most important entries in the PageRank of the Chess.com webgraph.}
+    \label{table:chesscom}
+\end{table}
+
+
+
+\subsubsection{Webgraph 2: Radiotelevisione svizzera di lingua italiana (RSI)}
+\begin{figure}[h!]
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[height=5cm]{fig/RSI.jpg}
+        \caption{Spy plot of the RSI webgraph.}
+        \label{fig:RSI}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[height=5cm]{fig/RSI_pagerank.jpg}
+        \caption{PageRank of RSI webgraph.}
+        \label{fig:RSI_pagerank}
+    \end{minipage}
+\end{figure}
+
+\begin{table}[h!]
+    \small
+    \centering
+    \begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        \textbf{Index} & \textbf{Page-rank} & \textbf{In} & \textbf{Out} & \textbf{Url}\\
+        \hline
+        281 &  0.0427305 & 242 &   1 & \tiny{\url{https://www.srgssr.ch/it/chi-siamo/organizzazione/piattaforma-per-segnalazioni-di-illeciti}} \\
+        283 &  0.0427305 & 242 &   1 & \tiny{\url{https://www.corsi-rsi.ch/}} \\
+         80 &  0.0316679 & 202 &   1 & \tiny{\url{https://boutique.rsi.ch/}} \\
+        297 &  0.0141953 & 110 &   1 & \tiny{\url{https://www.instagram.com/rsinews/}} \\
+        294 &  0.0104083 & 109 &   1 & \tiny{\url{https://www.youtube.com/channel/UC6UUxoC7DGUUlUHcJvulsfQ}} \\
+        296 &  0.0104083 & 109 &   1 & \tiny{\url{https://twitter.com/rsinews}} \\
+         16 &  0.0101878 & 241 & 139 & \tiny{\url{https://www.rsi.ch/sport/}} \\
+         70 &  0.0080161 & 247 & 107 & \tiny{\url{https://www.rsi.ch/meteo/}} \\
+        288 & 0.00640957 & 241 &  37 & \tiny{\url{https://www.rsi.ch/audio/}} \\
+        284 & 0.00640957 & 241 & 106 & \tiny{\url{https://www.rsi.ch/la-rsi/Dichiarazione-sulla-protezione-dei-dati-10499633.html}} \\
+        \hline
+    \end{tabular}
+    \caption{The ten most important entries in the PageRank of the RSI webgraph.}
+    \label{table:RSI}
+\end{table}
+
+\subsubsection{Webgraph 3: StackOverflow}
+\begin{figure}[!h]
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[height=5cm]{fig/StackOverflow.jpg}
+        \caption{Spy plot of the StackOverflow webgraph.}
+        \label{fig:StackOverflow}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \centering
+        \includegraphics[height=5cm]{fig/StackOverflow_pagerank.jpg}
+        \caption{PageRank of chess.com webgraph.}
+        \label{fig:StackOverflow_pagerank}
+    \end{minipage}
+\end{figure}
+
+\begin{table}[!h]
+    \small
+    \centering
+    \begin{tabular}{|l|l|l|l|l|} 
+        \hline
+        \textbf{Index} & \textbf{Page-rank} & \textbf{In} & \textbf{Out} & \textbf{Url}\\
+        \hline
+        106 &  0.0642491 & 167 &   1 & \tiny{\url{https://twitter.com/stackoverflow}} \\
+        199 &  0.0621094 &  28 &   1 & \tiny{\url{https://www.instagram.com/thestackoverflow/}} \\
+        105 &  0.0340524 & 144 &   1 & \tiny{\url{https://www.facebook.com/officialstackoverflow/}} \\
+        203 &   0.015951 &   4 &   1 & \tiny{\url{https://talent.stackoverflow.com/users/login}} \\
+         30 &  0.0151374 & 183 &  23 & \tiny{\url{https://stackoverflow.co/teams}} \\
+         94 &  0.0098377 & 184 &  47 & \tiny{\url{https://stackoverflow.com/legal/cookie-policy}} \\
+        107 & 0.00963737 & 166 &   0 & \tiny{\url{https://linkedin.com/company/stack-overflow}} \\
+         91 & 0.00959788 & 175 &  47 & \tiny{\url{https://stackoverflow.com/legal/privacy-policy}} \\
+         16 & 0.00954374 & 182 &  36 & \tiny{\url{https://stackoverflow.co/}} \\
+         17 & 0.00954374 & 182 &  26 & \tiny{\url{https://stackoverflow.co/talent}} \\
+
+        \hline
+    \end{tabular}
+    \caption{The ten most important entries in the PageRank of the StackOverflow webgraph.}
+    \label{table:StackOverflow}
+\end{table}
+
+\subsubsection{Conclusions}
+As we can see, in every connectivity matrix there are many areas that are not connected to the rest of the webgraph and areas that are very dense.
+Matematically speaking, there are many cliques.
+This happens because communities or similar links that are really close and they all reference each other, whereas many web pages are not related to each other and therefore are not linked.
+
+Taking the Chess.com connectivity graph as an example (\ref{fig:chesscom}), we can see that the first 60 pages are stlongly connected to each other, 
+these are just the different homepages depending on the language of the user (e.g. \url{https://www.chess.com/es}). 
+These pages just redirect to the main page and as it can be noticed in the pagerank table \ref{table:chesscom} are even more highly ranked than the main page.
+
 
 \subsection{Connectivity matrix and subcliques [5 points]}
 
