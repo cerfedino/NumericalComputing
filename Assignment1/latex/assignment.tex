@@ -22,11 +22,55 @@ The purpose of this assignment\footnote{This document is originally based on a S
 \subsection{Theory [20 points]}
 
 \begin{enumerate}
-\item[(a)] \textbf{What are an eigenvector, an eigenvalue and an eigenbasis?}
-\item[(b)] \textbf{What assumptions should be made to guarantee convergence of the power method?}
-\item[(c)] \textbf{What is the shift and invert approach?}
-\item[(d)] \textbf{What is the difference in cost of a single iteration of the power method, compared to the inverse iteration?}
-\item[(e)] \textbf{What is a Rayleigh quotient and how can it be used for eigenvalue computations?}
+\item[(a)] \textbf{What are an eigenvector, an eigenvalue and an eigenbasis?}\\
+An eigenvector is a nonzero vector that, when involved in a linear transformation gets stretched and scaled but stays on the same span. \\\\
+An eigenvalue, denoted with symbol $\lambda$ represents the factor of how much the eigenvector gets stretched along his direction. \\
+The eigenvalue can be negative, as it means the resulting vectors inverts its direction after the linear transformation.  \\\\
+An eigenbasis is a diagonal matrix that has eigenvectors as its columns, and eigenvalues along its diagonal.\\
+Given a matrix $A$ and a linear transformation $T$, 
+if there exists a vector $v$ such that $Tv = \lambda v$,
+then $v$ is an eigenvector of $A$ and $\lambda$ is an eigenvalue of A.
+If there exists a set of vectors $V$ such that $T(V) = \lambda V$, then $V$ is an eigenbasis of $A$.
+
+% An eigenvector is a vector that doesn't change direction when a linear transformation is applied to it.
+% An eigenvalue is a scalar that is multiplied by the eigenvector.
+% An eigenbasis is a set of eigenvectors that are linearly independent.
+
+% Given a matrix $A$ and a linear transformation $T$, 
+% if there exists a vector $v$ such that $Tv = \lambda v$,
+% then $v$ is an eigenvector of $A$ and $\lambda$ is an eigenvalue of A.
+% If there exists a set of vectors $V$ such that $T(V) = \lambda V$, then $V$ is an eigenbasis of $A$.
+
+
+\item[(b)] \textbf{What assumptions should be made to guarantee convergence of the power method?}\\
+We need to assume that the eigenvalue to which the power method converges 
+is the dominant eigenvalue, and we also need to assume that the randomly-chosen initial vector has a component in the same direction as the eigenvector.\\
+Also, to guarantee a faster convergence, $\lambda _1$ and $\lambda _2$ have to be distant, as the asymptotic error constant is $|\frac{\lambda _1}{\lambda _2}|$ meaning convergence is extremely slow if the two eigenvalues are close to each other.
+
+\item[(c)] \textbf{What is the shift and invert approach?}\\
+As mentioned previously, if the eigenvalues are close to each other convergence can be extremely slow.\\
+The inverse iteration uses the shift and invert tecnique to speed up the convergence.
+
+If the eigenvalues of $A$ are $\lambda_j$, the eigenvalues of $A -\alpha I$ are $\lambda_j - \alpha$, 
+and the eigenvalues of $B = (A-\alpha I)^{-1}$ are $\mu_j = \frac{1}{\lambda_j - \alpha}$
+
+If we apply the power method to $B$ we get an improve rate of $|\frac{\mu_2}{\mu_1}| = |\frac{\frac{1}{\lambda_2 - \alpha}}{\frac{1}{\lambda_1 - \alpha}}| = |\frac{\lambda_1 - \alpha}{\lambda_2 - \alpha}|$.\\
+It is therefore in our best interests to find an $\alpha$ as close as possible to any eigenvalue.\\
+The shift and invert approach is to choose $\alpha$ such that the improve rate is as small as possible.
+
+
+\item[(d)] \textbf{What is the difference in cost of a single iteration of the power method, compared to the inverse iteration?}\\
+Using the power method, each iteration involves a \textit{matrix-vector multiplication}, while the \textit{inverse iteration} requires solving a linear system.
+Solving a linear system is way more computationally expensive than a matrix-vector multiplication, having a fast convergence for inverse iteration is necessary in order for it to to be effective; 
+this would be impossible when tackling larger issues such as Internet searching.
+Inverse iteration must be used for smaller problems or problems with special structure that enables fast direct methods.
+
+
+\item[(e)] \textbf{What is a Rayleigh quotient and how can it be used for eigenvalue computations?}\\
+The Rayleigh quotient is an improvement over the inverse iteration method for finding eigenvalues.\\
+It guarantees very fast convergence, in most cases even cubically. To guarantee fast convergence, we change the value of $\alpha$ dynamically to be the Rayleigh quotient in each iteration.\\
+Even though Rayleigh quotient iteration is more computationally expensive as it requires to refactor the matrix in each iteration, the cubic convergence makes it worthwhile.
+
 \end{enumerate}
 
 \subsection{Other webgraphs [10 points]}
