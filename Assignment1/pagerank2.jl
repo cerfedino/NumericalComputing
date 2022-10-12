@@ -54,4 +54,4 @@ function pagerank2(U, G)
     bar(x, lab="page ranking")
 end
 
-x = @btime pagerank2(U, G)
+x = pagerank2(U, G)
