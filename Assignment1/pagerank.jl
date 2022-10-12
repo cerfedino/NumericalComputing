@@ -25,7 +25,6 @@ function pagerank(U, G)
     e = ones(n, 1);
     sI = sparse(I, n, n);
 
-
     # Default implementation
     x = (sI - p * G * D) \ e;
 

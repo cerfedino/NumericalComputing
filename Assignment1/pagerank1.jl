@@ -4,14 +4,15 @@ using MAT, SparseArrays
 using LinearAlgebra, Plots
 using PrettyTables
 
-file = matread("Assignment1/ETH500.mat");
+file = matread("Assignment1/datasets/ETH500.mat");
 G = file["G"];
 U = file["U"];
 
-function pagerank(U, G)
+function pagerank1(U, G)
 
     p = .85;
-
+    precision = 1e-16;
+    
     n = size(G)[2];
 
     # out-degree
@@ -23,14 +24,27 @@ function pagerank(U, G)
     D = sparse(k, k, map(x -> 1/x, c[k]), n, n);
 
     e = ones(n, 1);
-    sI = sparse(I, n, n);
-
-
 
     # Ex 5.1 Power method
-   
+    G = p * G * D;
+    z = ((1- p) * map(!iszero, c) + map(iszero, c)) / n;
+    z = reshape(z, (1,n));
+    x = e / n;
+    
+    prev_x = zeros(n);
+    it = 0;
+    while any(x->abs(x)>=precision, prev_x-x)
+        prev_x = x;
+        x = G * x + e * (z * x);
+        it += 1;
+    end
 
+    # normalize
+    x = x / sum(x);
+    
     # Print results
+    #   Print number of iterations
+    println("Number of iterations: ", it);
     #   Print table
     i = sortperm(vec(x), rev = true);
     header =(["index" "page-rank" "in" "out" "url"], ["i" "x" "r" "c" "U"])
@@ -40,4 +54,4 @@ function pagerank(U, G)
     bar(x, lab="page ranking")
 end
 
-x = pagerank(U, G)
+x = pagerank1(U, G)

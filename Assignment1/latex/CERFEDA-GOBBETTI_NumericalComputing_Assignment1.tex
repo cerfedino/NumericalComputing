@@ -205,11 +205,11 @@ The experiments are all done by calling the same function \texttt{surfer} that a
 \end{table}
 
 \subsubsection{Conclusions}
-As we can see, in every connectivity matrix there are many areas that are not connected to the rest of the webgraph and areas that are very dense.
-Matematically speaking, there are many cliques.
+As we can see, in every connectivity matrix there are many areas that are not connected to the rest of the webgraph and areas that are very dense.\\
+Matematically speaking, there are many cliques.\\
 This happens because communities or similar links that are really close and they all reference each other, whereas many web pages are not related to each other and therefore are not linked.
 
-Taking the Chess.com connectivity graph as an example (\ref{fig:chesscom}), we can see that the first 60 pages are stlongly connected to each other, 
+Taking the \texttt{Chess.com} connectivity graph as an example (\ref{fig:chesscom}), we can see that the first 60 pages are strongly connected to each other, 
 these are just the different homepages depending on the language of the user (e.g. \url{https://www.chess.com/es}). 
 These pages just redirect to the main page and as it can be noticed in the pagerank table \ref{table:chesscom} are even more highly ranked than the main page.
 
@@ -245,10 +245,12 @@ As we can see from the plot, there are several patches belonging to different or
 \end{tabular}
 \subsection{Connectivity matrix and disjoint subgraphs [10 points]}
 Let us model and execute the PageRank algorithm for the six-node subset depicted in Figure 5:
-\begin{center}
-\includegraphics[height=5cm]{fig/fig5.png}
-\end{center}
-\hline
+\begin{figure}[h!]
+    \centering
+    \includegraphics[height=5cm]{fig/fig5.png}
+    \label{fig:tinyWeb}
+\end{figure}
+
 \begin{minted}[linenos]{julia}
 n = 6;
 i = [ 1 2 3 3 4 4 5 6 ]
@@ -261,7 +263,7 @@ function pagerank(U, G, p)
 end
 pagerank(U,G,p)
 \end{minted}
-\hline
+
 
 \subsubsection{What is the connectivity matrix G? Which are its entries?}
 A connectivity matrix is an $n\times n$ sparse logical matrix where $n$ is the number of web pages. \\
@@ -290,6 +292,15 @@ index & page-rank & in & out & url \\
 \hline
 \end{tabular}\\\\
 We notice how page \textit{delta} is the highest-ranking one.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{fig/fig5_pagerank.jpg}
+    \caption{PageRank of \ref{fig:tinyWeb}.}
+    \label{fig:fig5_pagerank}
+\end{figure}
+
+
 \subsubsection{Describe what happens with this example to both the deﬁnition of PageRank and the computation done by pagerank in the limit $p \rightarrow 1$}
 $p = .9999999$\\
 \begin{tabular}{|r|r|r|r|r|}
@@ -337,6 +348,79 @@ So, by setting it to $0$, we notice how pages that have the same amount of in+ou
 % └───────┴───────────┴────┴─────┴───────┘
 
 \subsection{PageRanks by solving a sparse linear system [40 points]}
+\subsubsection{Power method}
+\begin{minted}[linenos]{julia}
+function pagerank1(U, G)
+    # ...
+    precision = 1e-16;
+    prev_x = zeros(n);
+    while any(x->abs(x)>=precision, prev_x-x)
+        prev_x = x;
+        x = G * x + e * (z * x);
+    end
+    # ...
+end
+\end{minted}
+At every iteration we compare the distances between elements of the newly-computed $x$ and the previously-computed $x$ to see if any of them are greater than the $precision$ (i.e they did not converge yet).
+
+\subsubsection{Inverse iteration}
+\begin{minted}[linenos]{julia}
+function pagerank2(U, G)
+    # ...
+    precision = 1e-16;
+    prev_x = zeros(n);
+    while any(x->abs(x)>=precision, prev_x-x)
+        prev_x = x;
+        x = (alpha * I - A) \ x;
+        x = x / sum(x);
+    end
+    # ...
+end
+\end{minted}
+
+Running the algorithms with precision $10^{-16}$ yields the following results:\\
+\begin{tabular}{l|c|c}
+     & \texttt{pagerank1.jl} & \texttt{pagerank2.jl}\\
+     \hline iterations & 69 & 10
+\end{tabular}
+
+
+
+\subsubsection{Impact of $\alpha$ on the inverse iteration}
+Running \texttt{pagerank2} with precision $10^{-16}$ yields the following results:\\\\
+\begin{tabular}{c|c|c|c|c} 
+      &  $\alpha=1.00$ & $\alpha=.95$ & $\alpha=.90$ & $\alpha=.80$\\
+     \hline iterations & 10 & 72 & \textit{no convergence} & \textit{no convergence}
+\end{tabular}\\
+
+% with precision 1e-16:
+% 1.00: 10 iterations
+% 0.95: 72 iterations
+% 0.90: no convergence
+% 0.80: no convergence
+
+\clearpage
+\subsubsection{PageRanks for three selected graphs}
+
+By running the algorithms with precision $10^{-16}$ and $alpha=0.99$ on the three datasets and by timing them with package \texttt{BenchmarkTests} we get the following results (keep in mind the computing time is hardware-dependent):\\\\
+\begin{table}[h]
+    \centering
+    \begin{tabular}{l|c|c}
+         iterations / computing time & \texttt{pagerank1.jl} & \texttt{pagerank2.jl}\\
+         \hline
+         Chess.com      & 168 / 4.199ms & 14 / 40.936ms \\
+         RSI            & 169 / 6.162ms & 14 / 40.648ms \\
+         StackOverflow  & 160 / 3.555ms & 13 / 37.491ms \\
+    \end{tabular}
+    \label{table:ex5.4}
+\end{table}
+
+
+We notice that \texttt{pagerank1} which is using the \textit{power method} performs several more iterations but, since the algorithm involves a computationally-cheaper matrix multiplication, the computing time is very short.\\
+On the other hand, \texttt{pagerank2} which is using the \textit{inverse iteration} method performs the least iterations but the computing time is longer, as it involves solving a linear system.\\
+The effectiveness of the \textit{inverse iteration} relies on how effectively we choose $\alpha$.
+
+
 
 
 
