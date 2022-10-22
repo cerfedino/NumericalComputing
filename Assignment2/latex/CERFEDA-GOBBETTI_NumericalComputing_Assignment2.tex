@@ -1,0 +1,53 @@
+\documentclass[unicode,11pt,a4paper,oneside,numbers=endperiod,openany]{scrartcl}
+
+\renewcommand{\thesubsection}{\arabic{subsection}}
+
+\input{assignment.sty}
+
+
+\hyphenation{PageRank}
+\hyphenation{PageRanks}
+
+
+\begin{document}
+
+
+\setassignment
+\setduedate{Wednesday, 26 October 2022, 23:59 AM}
+
+\serieheader{Numerical Computing}{2022}{Student: FULL NAME}{Discussed with: FULL NAME}{Solution for Project 2}{}
+\newline
+
+\assignmentpolicy
+
+
+The purpose of this assignment\footnote{This document is originally 
+based on a blog from Cleve Moler, who wrote a fantastic blog post about the Lake Arrowhead graph, and John 
+Gilbert, who initially created the coauthor graph from the 1993 Householder Meeting. You can find more information 
+at \url{http://blogs.mathworks.com/cleve/2013/06/10/lake-arrowhead-coauthor-graph/}.  Most of this assignment is derived
+from this archived work.} is to learn the importance of sparse linear algebra algorithms to solve fundamental 
+questions in social network analyses.
+We will use the coauthor graph from the Householder Meeting and the social network of friendships from Zachary's karate club~\cite{karate}.
+These two graphs are one of the first examples where matrix methods were used in computational social network analyses.
+
+\section*{Social Networks [Total: 85 points + 15 points for report quality]}
+
+\subsection{The Reverse Cuthill McKee Ordering [10 points]}
+
+\subsection{Sparse Matrix Factorization [20 points]}
+
+\subsection{Degree Centrality [5 points]}
+
+\subsection{The Connectivity of the Coauthors [5 points]}
+
+\subsection{PageRank of the Coauthor Graph [5 points]}
+
+\subsection{Zachary's karate club: social network of friendships between 34 members [40 points]}
+
+\begin{thebibliography}{99}
+\bibitem{karate} The social network of a karate club at a US university, M.~E.~J. Newman and M. Girvan, Phys. Rev. E 69,026113 (2004)
+pp. 219-229.
+\end{thebibliography}
+
+
+\end{document}
