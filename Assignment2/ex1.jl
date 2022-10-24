@@ -12,26 +12,30 @@ A = file["A_SymPosDef"]
 
 
 # Visualize original Matrix
-spy(A)
+# spy(A)
 
 # Permute A using the reverse Cuthill-McKee algorithm
 p = symrcm(A)
-B = A[p,p]
-spy(B)
+A_permuted = A[p,p]
 
 # Visualize permuted matrix
-spy(B)
+# spy(A_permuted)
+
+
 # Compute Cholesky factor
 L = cholesky(A).L
-# Visualize Cholesky factor
-graphplot(L, names=1:size(L,1), nodefillc=:lightblue, nodelabel=1:size(L,1), nodefontsize=8, nodesize=0.1, edgewidth=0.1)
-# Compute Cholesky factor of permuted matrix
-L_perm = cholesky(A_perm).L
-# Visualize Cholesky factor of permuted matrix
-graphplot(L_perm, names=1:size(L_perm,1), nodefillc=:lightblue, nodelabel=1:size(L_perm,1), nodefontsize=8, nodesize=0.1, edgewidth=0.1)
+
+# spy(sparse(L))
+
+L_permuted = cholesky(A_permuted).L
+
+# spy(sparse(L_permuted))
+
+# plot everything in one figure to file
+plot(spy(A), spy(A_permuted), spy(sparse(L)), spy(sparse(L_permuted)), layout=(2, 2))
 
 # Compute number of nonzeros
 nnz(A)
-nnz(A_perm)
-nnz(L)
-nnz(L_perm)
+nnz(A_permuted)
+nnz(sparse(L))
+nnz(sparse(L_permuted))
