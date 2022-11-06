@@ -20,19 +20,23 @@ function spectral_part(A)
     end
     
     #   1.  Construct the Laplacian matrix.
+    D = Diagonal(zeros(n))
+    sum!(D.diag, A)
+    L = Matrix(D-A);
+    # print(L);
   
+
     #   2.  Compute its eigendecomposition.
+    λ = eigen(L);
+    w = λ.vectors[:,sortperm(λ.values)[2]];
+
 
     #   3.  Label the vertices with the entries of the Fiedler vector.
 
     #   4.  Partition them around their median value, or 0.
 
+
+    m = median(w);
     #   5.  Return the indicator vector
-
-    # RANDOM PARTITIONING - REMOVE AFTER COMPLETION OF THE EXERCISE
-    n = size(A)[1];
-    rng = MersenneTwister(1234);
-    p = bitrand(rng, n);
-    return p
-
+    return map(x->x < m ? 1 : 2, w);
 end
