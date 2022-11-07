@@ -8,6 +8,10 @@ using Arpack, LinearAlgebra, Metis, Random, SparseArrays, Statistics
 #   Plot packages
 using Graphs, SGtSNEpi, GLMakie, Colors, CairoMakie, PrettyTables
 
+using Suppressor
+using FileIO, JLD2
+
+
 #   Tools
 #include("./Tools/add_paths.jl");
 include("Tools/add_paths.jl")
@@ -20,8 +24,24 @@ coords = coords[:,1:2]
 
 
 #   Run benchmark
-benchmark_bisection()
-benchmark_recursive()
-benchmark_metis()
 
+output = @capture_out benchmark_bisection()
+open("out/benchmark_bisection.txt","a") do io
+    println(output)
+    println("\nSaving benchmark to file..")
+    println(io,output)
+ end
 
+output = @capture_out benchmark_recursive()
+open("out/benchmark_recursive.txt","a") do io
+    println(output)
+    println("\nSaving benchmark to file..")
+    println(io,output)
+ end
+
+output = @capture_out benchmark_metis()
+open("out/benchmark_metis.txt","a") do io
+    println(output)
+    println("\nSaving benchmark to file..")
+    println(io,output)
+ end

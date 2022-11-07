@@ -33,12 +33,27 @@ function benchmark_recursive()
 
         #   Recursive routines
         #   1.  Spectral
-        
+        # println("RUNNING SPECTRAL")
+        pAll[i,2] = count_edge_cut(A, rec_bisection("spectral_part",3,A))
+        pAll[i,3] = count_edge_cut(A, rec_bisection("spectral_part",4,A))
+
         #   2.  METIS
-        
+        # println("RUNNING METIS")
+        pAll[i,4] = count_edge_cut(A, metis_part(A, 8, :RECURSIVE))
+        pAll[i,5] = count_edge_cut(A, metis_part(A, 16, :RECURSIVE))
+
+
         #   3.  Coordinate
-        
+        # println("RUNNING COORDINATE")
+        pAll[i,6] = count_edge_cut(A, rec_bisection("coordinate_part",3,A,coords))
+        pAll[i,7] = count_edge_cut(A, rec_bisection("coordinate_part",4,A,coords))
+
+
         #   4.  Inertial
+        # println("RUNNING INERTIAL")
+        pAll[i,8] = count_edge_cut(A, rec_bisection("inertial_part",3,A,coords))
+        pAll[i,9] = count_edge_cut(A, rec_bisection("inertial_part",4,A,coords))
+
     end
 
     #   Print result table

@@ -299,9 +299,9 @@ version = "1.1.0"
 
 [[deps.FileIO]]
 deps = ["Pkg", "Requires", "UUIDs"]
-git-tree-sha1 = "80ced645013a5dbdc52cf70329399c35ce007fae"
+git-tree-sha1 = "7be5f99f7d15578798f338f5433b6c432ea8037b"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
-version = "1.13.0"
+version = "1.16.0"
 
 [[deps.FillArrays]]
 deps = ["LinearAlgebra", "Random", "SparseArrays", "Statistics"]
@@ -533,6 +533,12 @@ version = "1.4.0"
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
 uuid = "82899510-4779-5014-852e-03e436cf321d"
 version = "1.0.0"
+
+[[deps.JLD2]]
+deps = ["FileIO", "MacroTools", "Mmap", "OrderedCollections", "Pkg", "Printf", "Reexport", "TranscodingStreams", "UUIDs"]
+git-tree-sha1 = "acb4be8227e1f3ff890d564d55dcde9cf92e4337"
+uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+version = "0.4.26"
 
 [[deps.JLLWrappers]]
 deps = ["Preferences"]
@@ -1118,6 +1124,11 @@ version = "0.6.5"
 [[deps.SuiteSparse]]
 deps = ["Libdl", "LinearAlgebra", "Serialization", "SparseArrays"]
 uuid = "4607b0f0-06f3-5cda-b6b1-a6196a1729e9"
+
+[[deps.Suppressor]]
+git-tree-sha1 = "c6ed566db2fe3931292865b966d6d140b7ef32a9"
+uuid = "fd094767-a336-5f1f-9728-57cf17d0bbfb"
+version = "0.2.1"
 
 [[deps.TOML]]
 deps = ["Dates"]
