@@ -26,21 +26,21 @@ coords = coords[:,1:2]
 #   Run benchmark
 
 output = @capture_out benchmark_bisection()
-open("out/benchmark_bisection.txt","a") do io
+open("out/benchmark_bisection.txt","w") do io
     println(output)
     println("\nSaving benchmark to file..")
     println(io,output)
  end
 
 output = @capture_out benchmark_recursive()
-open("out/benchmark_recursive.txt","a") do io
+open("out/benchmark_recursive.txt","w") do io
     println(output)
     println("\nSaving benchmark to file..")
     println(io,output)
  end
 
 output = @capture_out benchmark_metis()
-open("out/benchmark_metis.txt","a") do io
+open("out/benchmark_metis.txt","w") do io
     println(output)
     println("\nSaving benchmark to file..")
     println(io,output)
