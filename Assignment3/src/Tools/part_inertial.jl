@@ -14,31 +14,34 @@ julia> inertial_part(A, coords)
 """
 function inertial_part(A, coords)
     # Partitions two-dim matrix of x and y coordinates into array of tuples
-    tuples = Iterators.partition(coords, 2)
-
+    tuples = eachrow(coords)
     
     #   1.  Compute the center of mass.
     cm = reduce((acc,coord)->(acc[1]+coord[1], acc[2]+coord[2]),tuples, init=(0,0));
     cm = (cm[1]/length(tuples),cm[2]/length(tuples))
     # println(cm)
+    # cm = (sum(x)/length(x), sum(y)/length(y));
+    @show cm
 
 
     #   2.  Construct the matrix M. (see pdf of the assignment)
     sxx, syy = reduce((sxx,coord)->sxx+(coord[1]-cm[1])^2,tuples,init=0), reduce((syy,coord)->syy+(coord[2]-cm[2])^2,tuples,init=0) 
     sxy = reduce((sxy,coord)->sxy+(coord[1]-cm[1])*(coord[2]-cm[2]),tuples,init=0)
     M = [ sxx sxy ; sxy syy]
+    @show M
     # println(M)
 
 
     #   3.  Compute the eigenvector associated with the smallest eigenvalue of M.
-    λ = eigen(M);
-    u = λ.vectors[:,sortperm(λ.values)[1]];
-
+    λ, v = eigs(M,nev=1,which=:SR)
+    v = v[:,1] # Smallest eigenvector
+    # Find orthogonal vector
+    w = [ v[2],-v[1] ];
 
     #   4.  Partition the nodes around line L 
     #       (use may use the function partition(coords, eigv))
 
-    p = partition(coords,u)
+    p = partition(coords,w)
     # p = map(x->x∈p[1] ? 1 : 2, collect(1:size(A)[1]))
     # @show p
     return map(x->x∈p[1] ? 1 : 2, collect(1:size(A)[1]))

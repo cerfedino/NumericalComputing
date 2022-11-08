@@ -33,23 +33,30 @@ function benchmark_bisection()
 
     #   Loop through meshes
     for (i, mesh) in enumerate(meshes)
+        println("\n\n",mesh,"\n===\n")
+
         A = data[i][1];
         coords = data[i][2];
         pAll[i, 1] = mesh
 
         #   Coordinate bisection
+        println("-> coordinate_part")
         pCoordinate = coordinate_part(A, coords);
         pAll[i, 2] = count_edge_cut(A, pCoordinate);
 
         #   METIS bisection
+        println("-> metis_part")
         pMetis = metis_part(A, 2, :KWAY);
         pAll[i, 3] = count_edge_cut(A, pMetis);
 
         #   Spectral bisection
+
+        println("-> spectral_part")
         pSpectral = spectral_part(A);
         pAll[i, 4] = count_edge_cut(A, pSpectral);
 
         #   Inertial bisection
+        println("-> inertial_part")
         pInertial = inertial_part(A, coords);
         pAll[i, 5] = count_edge_cut(A, pInertial);         
     end

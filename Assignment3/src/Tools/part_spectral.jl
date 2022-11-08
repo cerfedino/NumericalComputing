@@ -20,8 +20,7 @@ function spectral_part(A)
     end
     
     #   1.  Construct the Laplacian matrix.
-    D = Diagonal(zeros(n))
-    sum!(D.diag, A)
+    D = Diagonal(vec(sum(A,dims=1)))
     L = Matrix(D-A);
     # print(L);
   
