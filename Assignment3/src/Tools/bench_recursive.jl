@@ -37,11 +37,11 @@ function benchmark_recursive()
         println("-> spectral_part")
         p = rec_bisection("spectral_part",3,A)
         pAll[i,2] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-spectral-p8-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-spectral-p8-cut:$cut.png",draw_graph(A, coords, p))
 
         p = rec_bisection("spectral_part",4,A)
         pAll[i,3] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-spectral-p16-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-spectral-p16-cut:$cut.png",draw_graph(A, coords, p))
 
         # pAll[i,3] = count_edge_cut(A, )
 
@@ -51,11 +51,11 @@ function benchmark_recursive()
         # pAll[i,4] = count_edge_cut(A, metis_part(A, 8, :RECURSIVE))
         p = metis_part(A, 8, :RECURSIVE)
         pAll[i,4] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-metis-p8-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-metis-p8-cut:$cut.png",draw_graph(A, coords, p))
 
         p = metis_part(A, 16, :RECURSIVE)
         pAll[i,5] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-metis-p16-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-metis-p16-cut:$cut.png",draw_graph(A, coords, p))
 
 
         #   3.  Coordinate
@@ -63,11 +63,11 @@ function benchmark_recursive()
         println("-> coordinate_part")
         p = rec_bisection("coordinate_part",3,A,coords)
         pAll[i,6] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-coordinate-p8-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-coordinate-p8-cut:$cut.png",draw_graph(A, coords, p))
 
         p = rec_bisection("coordinate_part",4,A,coords)
         pAll[i,7] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-coordinate-p16-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-coordinate-p16-cut:$cut.png",draw_graph(A, coords, p))
 
         # pAll[i,6] = count_edge_cut(A, rec_bisection("coordinate_part",3,A,coords))
         # pAll[i,7] = count_edge_cut(A, rec_bisection("coordinate_part",4,A,coords))
@@ -78,11 +78,11 @@ function benchmark_recursive()
         println("-> inertial_part")
         p = rec_bisection("inertial_part",3,A,coords)
         pAll[i,8] = cut = count_edge_cut(A, p)
-        # GLMakie.save("out/plots/recursive-$mesh-inertial-p8-cut:$cut.png",draw_graph(A, coords, p))
+        # GLMakie.save("out/plots/recursive/recursive-$mesh-inertial-p8-cut:$cut.png",draw_graph(A, coords, p))
 
         p = rec_bisection("inertial_part",4,A,coords)
         pAll[i,9] = cut = count_edge_cut(A, p)
-        GLMakie.save("out/plots/recursive-$mesh-inertial-p16-cut:$cut.png",draw_graph(A, coords, p))
+        GLMakie.save("out/plots/recursive/recursive-$mesh-inertial-p16-cut:$cut.png",draw_graph(A, coords, p))
 
         # pAll[i,9] = count_edge_cut(A, rec_bisection("inertial_part",4,A,coords))
 
