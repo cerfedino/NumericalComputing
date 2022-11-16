@@ -1,0 +1,19 @@
+function inertial_part(A, coords)
+    tuples = eachrow(coords)
+
+    cm = reduce((acc,coord)->(acc[1]+coord[1], acc[2]+coord[2]),tuples, init=(0,0));
+    cm = (cm[1]/length(tuples),cm[2]/length(tuples))
+
+    sxx = reduce((sxx,coord)->sxx+(coord[1]-cm[1])^2,tuples,init=0)
+    syy = reduce((syy,coord)->syy+(coord[2]-cm[2])^2,tuples,init=0)
+    sxy = reduce((sxy,coord)->sxy+(coord[1]-cm[1])*(coord[2]-cm[2]),tuples,init=0)
+    M = [ sxx sxy ; sxy syy]
+
+    e, v = eigs(M,nev=1,which=:SR)
+    v = v[:,1] # Smallest eigenvector
+    w = [ v[2],-v[1] ];
+
+    p = partition(coords,w)
+    return map(x->x∈p[1] ? 1 : 2, collect(1:size(A)[1]))
+
+end
