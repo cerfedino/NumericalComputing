@@ -11,7 +11,6 @@ using Graphs, SGtSNEpi, GLMakie, Colors, CairoMakie, PrettyTables
 using Suppressor
 using FileIO, JLD2
 
-
 #   Tools
 #include("./Tools/add_paths.jl");
 include("Tools/add_paths.jl")
@@ -45,3 +44,7 @@ open("out/benchmark_metis.txt","w") do io
     println("\nSaving benchmark to file..")
     println(io,output)
  end
+
+# benchmark_bisection()
+# benchmark_recursive()
+# benchmark_metis()

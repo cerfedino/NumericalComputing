@@ -10,15 +10,6 @@ julia> benchmark_metis()
 ```
 """
 function benchmark_metis()
-    #   1.  Load commanche_dual.mat and skirt.mat
-    
-    #   2.  Call metis_part to:
-    #       a) Recursively partition the graphs in 16 and 32 subsets.
-    #       b) Perform direct k-way partitioning of the graphs in 16 and 32 subsets.
-
-    #   3.  Visualize the results for 16 and 32 partitions.
-
-    #   List the meshes to compare
     meshes = ["commanche_dual" "skirt"]
 
     #   Init result array
@@ -37,7 +28,7 @@ function benchmark_metis()
 
         #   Read data
         A, coords = read_mat_graph(path);
-        #   1st row
+
         p = metis_part(A, 16, :RECURSIVE)
         pAll[1,i+1] = cut = count_edge_cut(A, p)
         GLMakie.save("out/plots/metis/metis-$mesh-recursive-p16-cut:$cut.png",draw_graph(A, coords, p))
