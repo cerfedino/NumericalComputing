@@ -42,23 +42,31 @@ function benchmark_bisection()
         #   Coordinate bisection
         println("-> coordinate_part")
         pCoordinate = coordinate_part(A, coords);
-        pAll[i, 2] = count_edge_cut(A, pCoordinate);
+        pAll[i, 2] = cut = count_edge_cut(A, pCoordinate);
+        # GLMakie.save("out/plots/bisection/bisection-$mesh-coordinate-cut:$cut.png",draw_graph(A, coords, pCoordinate))
+
 
         #   METIS bisection
         println("-> metis_part")
         pMetis = metis_part(A, 2, :KWAY);
-        pAll[i, 3] = count_edge_cut(A, pMetis);
+        pAll[i, 3] = cut = count_edge_cut(A, pMetis);
+        # GLMakie.save("out/plots/bisection/bisection-$mesh-metis-cut:$cut.png",draw_graph(A, coords, pMetis))
+
 
         #   Spectral bisection
 
         println("-> spectral_part")
         pSpectral = spectral_part(A);
-        pAll[i, 4] = count_edge_cut(A, pSpectral);
+        pAll[i, 4] = cut = count_edge_cut(A, pSpectral);
+        # GLMakie.save("out/plots/bisection/bisection-$mesh-spectral-cut:$cut.png",draw_graph(A, coords, pSpectral))
+
 
         #   Inertial bisection
         println("-> inertial_part")
         pInertial = inertial_part(A, coords);
-        pAll[i, 5] = count_edge_cut(A, pInertial);         
+        pAll[i, 5] = cut = count_edge_cut(A, pInertial);  
+        # GLMakie.save("out/plots/bisection/bisection-$mesh-inertial-cut:$cut.png",draw_graph(A, coords, pInertial))
+
     end
 
     #   Print table

@@ -19,17 +19,15 @@ function inertial_part(A, coords)
     #   1.  Compute the center of mass.
     cm = reduce((acc,coord)->(acc[1]+coord[1], acc[2]+coord[2]),tuples, init=(0,0));
     cm = (cm[1]/length(tuples),cm[2]/length(tuples))
-    # println(cm)
-    # cm = (sum(x)/length(x), sum(y)/length(y));
-    @show cm
+    # @show cm
 
 
     #   2.  Construct the matrix M. (see pdf of the assignment)
-    sxx, syy = reduce((sxx,coord)->sxx+(coord[1]-cm[1])^2,tuples,init=0), reduce((syy,coord)->syy+(coord[2]-cm[2])^2,tuples,init=0) 
+    sxx = reduce((sxx,coord)->sxx+(coord[1]-cm[1])^2,tuples,init=0)
+    syy = reduce((syy,coord)->syy+(coord[2]-cm[2])^2,tuples,init=0) 
     sxy = reduce((sxy,coord)->sxy+(coord[1]-cm[1])*(coord[2]-cm[2]),tuples,init=0)
     M = [ sxx sxy ; sxy syy]
-    @show M
-    # println(M)
+    # @show M
 
 
     #   3.  Compute the eigenvector associated with the smallest eigenvalue of M.
@@ -39,11 +37,7 @@ function inertial_part(A, coords)
     w = [ v[2],-v[1] ];
 
     #   4.  Partition the nodes around line L 
-    #       (use may use the function partition(coords, eigv))
-
     p = partition(coords,w)
-    # p = map(x->x∈p[1] ? 1 : 2, collect(1:size(A)[1]))
-    # @show p
     return map(x->x∈p[1] ? 1 : 2, collect(1:size(A)[1]))
 
 end

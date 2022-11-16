@@ -35,7 +35,8 @@ function spectral_part(A)
     #   4.  Partition them around their median value, or 0.
 
 
-    m = median(w);
+    # m = median(w);
+    m = 0
     #   5.  Return the indicator vector
     return map(x->x < m ? 1 : 2, w);
 end
