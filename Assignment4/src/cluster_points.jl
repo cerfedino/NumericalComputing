@@ -3,73 +3,88 @@
 # Numerical Computing
 
 using SparseArrays, LinearAlgebra, Arpack
+using GLMakie
 using Clustering
 
 include("./Tools/add_paths.jl");
+include("./Tools/get_points.jl");
+include("./Tools/min_span_tree.jl");
 
 # Specify the number of clusters
-K = 2;
-
-# 1a) Get coordinate list from point clouds
-# ----------------------------
-#     Your implementation
-# ----------------------------
-
+for K in [2,4]
 #   Coords used in this demo
-#   TODO: Get the coordinate list from the function getpoints() located in the file /Tools/get_points.jl
-pts_dummy = [rand(100,1)*5 rand(100,1)*5]
-n = size(pts_dummy, 1);
+    mesh_names = ["pts_spiral", "pts_clusterin", "pts_corn", "pts_halfk", "pts_moon", "pts_outlier"]
+    # 1a) Get coordinate list from point clouds
+    # ----------------------------
+    #     Your implementation
+    # ----------------------------
+    for (index, pts) in enumerate(getpoints())
+        # pts = getpoints()[1]
+        # @show typeof(pts_dummy) pts_dummy
 
-#   Dummy variable
-dummy_map = rand(1:K, size(pts_dummy, 1));
-dummy_ϵ = 1;
-#   Create Gaussian similarity function
-S = similarity(pts_dummy[:, 1:2]);
+        n = size(pts, 1);
 
-# 1b) Find the mininal spanning tree of the full graph
-# ----------------------------
-#     Your implementation
-#     (Hint: use the function minspantree() located in the file Tools/min_span_tree.jl)
-# ----------------------------
+        #   Dummy variable
+        # dummy_map = rand(1:K, size(pts, 1));
 
-#   Compute epsilon
-# ----------------------------
-#     Your implementation
-# ----------------------------
+        #   Create Gaussian similarity function
+        S = similarity(pts[:, 1:2]);
 
-# 1c) Compute the epsilon similarity graph
-G_e = epsilongraph(dummy_ϵ, pts_dummy);
-# ----------------------------
-#     Your implementation
-# ----------------------------
+        # 1b) Find the mininal spanning tree of the full graph
+        # ----------------------------
+        #     Your implementation
+        #     (Hint: use the function minspantree() located in the file Tools/min_span_tree.jl)
+        # ----------------------------
+        mintree = minspantree(S)
+        # @show typeof(Matrix(mintree)) Matrix(mintree)
 
-# 1d) Create the adjacency matrix for the epsilon case
-# ----------------------------
-#     Your implementation
-# ----------------------------
-W_e = S .* G_e;
-draw_graph(W_e, pts_dummy)
+        #   Compute epsilon
+        # ----------------------------
+        #     Your implementation
+        # ----------------------------
+        ϵ = maximum(mintree)
+        # 1c) Compute the epsilon similarity graph
+        # ----------------------------
+        #     Your implementation
+        # ----------------------------
+        G_e = epsilongraph(ϵ, pts)
 
-# 1e) Create the Laplacian matrix and implement spectral clustering
-L, D = createlaplacian(W_e);
-# ----------------------------
-#     Your implementation
-# ----------------------------
+        # 1d) Create the adjacency matrix for the epsilon case
+        # ----------------------------
+        #     Your implementation
+        # ----------------------------
+        W_e = S .* G_e;
+        # draw_graph(W_e, pts)
 
-#   Spectral method
-# ----------------------------
-#     Your implementation
-#     (Hint: use eigsvals() and eigvecs())
-# ----------------------------
+        # 1e) Create the Laplacian matrix and implement spectral clustering
+        L, D = createlaplacian(W_e);
+        # ----------------------------
+        #     Your implementation
+        # ----------------------------
 
-# 1f) Run K-means on input data
-R = kmeans(pts_dummy', K);
-data_assign = R.assignments;
+        #   Spectral method
+        # ----------------------------
+        #     Your implementation
+        #     (Hint: use eigsvals() and eigvecs())
+        # ----------------------------
+        lambda = eigvals(L);
+        Y = eigvecs(L);
+        ind = sortperm(lambda);
+        Y = Y[:,ind[begin:K]]
 
-#   Cluster rows of eigenvector matrix of L corresponding to K smallest eigenvalues. Use kmeans as above.
-R = kmeans(pts_dummy', K);
-spec_assign = R.assignments;
+        # 1f) Run K-means on input data
+        R = kmeans(pts', K);
+        data_assign = R.assignments;
 
-# 1h) Visualize spectral and k-means clustering results
-draw_graph(W_e, pts_dummy, data_assign)
-draw_graph(W_e, pts_dummy, spec_assign)
+        #   Cluster rows of eigenvector matrix of L corresponding to K smallest eigenvalues. Use kmeans as above.
+        R = kmeans(Y', K);
+        spec_assign = R.assignments;
+
+        # 1h) Visualize spectral and k-means clustering results
+        GLMakie.save("out/plots/1/$(mesh_names[index])-K$K-kmeans.png",draw_graph(W_e, pts, data_assign))
+        GLMakie.save("out/plots/1/$(mesh_names[index])-K$K-spectral.png",draw_graph(W_e, pts, spec_assign))
+
+        # draw_graph(W_e, pts, data_assign) # K-means
+        # draw_graph(W_e, pts, spec_assign) # Spectral
+    end
+end
