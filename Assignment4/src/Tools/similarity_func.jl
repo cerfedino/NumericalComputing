@@ -7,7 +7,7 @@ Create the similarity matrix 'S' from the coordinate list 'pts'.
 """
 function similarity(pts)
     n = size(pts, 1);
-    σ = log(n);
+    σ = 2*log(n);
 
     S = pairwise(Euclidean(), pts, dims = 1);
     S = exp.(-S .^ 2 ./ (2 * σ ^ 2));

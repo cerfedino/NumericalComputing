@@ -28,7 +28,7 @@ for (idx,(path, name)) in enumerate(meshes)
     # ----------------------------
     #     Your implementation
     # ----------------------------
-
+    # TODO: I never use D.. Is it correct ?
     L, D = createlaplacian(W)
 
     #   Eigen-decomposition
@@ -43,8 +43,8 @@ for (idx,(path, name)) in enumerate(meshes)
     Y = Y[:,ind[begin:K]]
 
     # Plot and compare 
-    GLMakie.save("out/plots/2/1.'$name'-eigenvector_plot.png",draw_graph(L, pts))
-    GLMakie.save("out/plots/2/1.'$name'-regular_plot.png",draw_graph(W, Y[:,2:3]))
+    GLMakie.save("out/2/1.'$name'-laplacian_plot.png",draw_graph(L, pts))
+    GLMakie.save("out/2/1.'$name'-eigenvector_plot.png",draw_graph(W, Y[:,2:3]))
 
     # 2b) Cluster each graph in K = 4 clusters with spectral and k-means method, compare your results visually for each case.
 
@@ -61,12 +61,12 @@ for (idx,(path, name)) in enumerate(meshes)
 
 
     #   Plot and compare
-    GLMakie.save("out/plots/2/2.'$name'-K$K-kmeans.png",draw_graph(W, pts, data_assign))
-    GLMakie.save("out/plots/2/2.'$name'-K$K-spectral.png",draw_graph(W, pts, spec_assign))
+    GLMakie.save("out/2/2.'$name'-K$K-kmeans.png",draw_graph(W, pts, data_assign))
+    GLMakie.save("out/2/2.'$name'-K$K-spectral.png",draw_graph(W, pts, spec_assign))
 
     # 2c) Calculate the number of nodes per clustering
-    GLMakie.save("out/plots/2/3.'$name'-K$K-kmeans_histogram.png",histogram(data_assign, title = "K-means histogram", legend = false))
-    GLMakie.save("out/plots/2/3.'$name'-K$K-spectral_histogram.png",histogram(spec_assign, title = "Spectral histogram", legend = false))
+    GLMakie.save("out/2/3.'$name'-K$K-kmeans_histogram.png",histogram(data_assign, title = "K-means histogram", legend = false))
+    GLMakie.save("out/2/3.'$name'-K$K-spectral_histogram.png",histogram(spec_assign, title = "Spectral histogram", legend = false))
 
     
     function countClusterAssign(assign)
