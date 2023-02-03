@@ -1,17 +1,15 @@
 #   M.L. for Numerical Computing class @USI - malik.lechekhab@usi.ch 
-"""
-    spectral_part(A)
+#     spectral_part(A)
 
-Compute the bi-partions of graph `A` using spectral method.
+# Compute the bi-partions of graph `A` using spectral method.
 
-# Examples
-```julia-repl
-julia> spectral_part(A)
- 1
- ⋮
- 2
-```
-"""
+# # Examples
+
+# julia> spectral_part(A)
+#  1
+#  ⋮
+#  2
+
 function spectral_part(A)
     n = size(A)[1]
 

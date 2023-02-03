@@ -1,17 +1,16 @@
-#   M.L. for Numerical Computing class @USI - malik.lechekhab@usi.ch 
-"""
-    inertial_part(A, coords)
+##   M.L. for Numerical Computing class @USI - malik.lechekhab@usi.ch 
 
-Compute the bi-partions of graph `A` using inertial method based on the `coords` of the graph.
+#     inertial_part(A, coords)
 
-# Examples
-```julia-repl
-julia> inertial_part(A, coords)
- 1
- ⋮
- 2
-```
-"""
+# Compute the bi-partions of graph `A` using inertial method based on the `coords` of the graph.
+
+## Examples
+
+# julia> inertial_part(A, coords)
+#  1
+#  ⋮
+#  2
+
 function inertial_part(A, coords)
     # Partitions two-dim matrix of x and y coordinates into array of tuples
     tuples = eachrow(coords)

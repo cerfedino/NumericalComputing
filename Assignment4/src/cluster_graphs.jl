@@ -7,7 +7,7 @@ using Clustering
 using GLMakie, PrettyTables, Suppressor
 using MAT
 
-include("Tools/add_paths.jl");
+include("./Tools/add_paths.jl");
 
 # Number of clusters
 K = 4;
